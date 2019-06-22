@@ -1,0 +1,220 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "",
+  "projects": {
+    "demo-fullstack-nx": {
+      "projectType": "application",
+      "schematics": {
+        "@nrwl/workspace:component": {
+          "style": "scss"
+        }
+      },
+      "root": "apps/demo-fullstack-nx",
+      "sourceRoot": "apps/demo-fullstack-nx/src",
+      "prefix": "demo-fullstack-nx",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/apps/demo-fullstack-nx",
+            "index": "apps/demo-fullstack-nx/src/index.html",
+            "main": "apps/demo-fullstack-nx/src/main.ts",
+            "polyfills": "apps/demo-fullstack-nx/src/polyfills.ts",
+            "tsConfig": "apps/demo-fullstack-nx/tsconfig.app.json",
+            "assets": [
+              "apps/demo-fullstack-nx/src/favicon.ico",
+              "apps/demo-fullstack-nx/src/assets"
+            ],
+            "styles": ["apps/demo-fullstack-nx/src/styles.scss"],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/demo-fullstack-nx/src/environments/environment.ts",
+                  "with": "apps/demo-fullstack-nx/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "demo-fullstack-nx:build",
+            "proxyConfig": "apps/demo-fullstack-nx/proxy.conf.json"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "demo-fullstack-nx:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "demo-fullstack-nx:build"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "apps/demo-fullstack-nx/tsconfig.app.json",
+              "apps/demo-fullstack-nx/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/demo-fullstack-nx/jest.config.js",
+            "tsConfig": "apps/demo-fullstack-nx/tsconfig.spec.json",
+            "setupFile": "apps/demo-fullstack-nx/src/test-setup.ts"
+          }
+        }
+      }
+    },
+    "demo-fullstack-nx-e2e": {
+      "root": "apps/demo-fullstack-nx-e2e",
+      "sourceRoot": "apps/demo-fullstack-nx-e2e/src",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/demo-fullstack-nx-e2e/cypress.json",
+            "tsConfig": "apps/demo-fullstack-nx-e2e/tsconfig.e2e.json",
+            "devServerTarget": "demo-fullstack-nx:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "demo-fullstack-nx:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": "apps/demo-fullstack-nx-e2e/tsconfig.e2e.json"
+          }
+        }
+      }
+    },
+    "api": {
+      "root": "apps/api",
+      "sourceRoot": "apps/api/src",
+      "projectType": "application",
+      "prefix": "api",
+      "schematics": {},
+      "architect": {
+        "build": {
+          "builder": "@nrwl/node:build",
+          "options": {
+            "outputPath": "dist/apps/api",
+            "main": "apps/api/src/main.ts",
+            "tsConfig": "apps/api/tsconfig.app.json",
+            "assets": ["apps/api/src/assets"]
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "extractLicenses": true,
+              "inspect": false,
+              "fileReplacements": [
+                {
+                  "replace": "apps/api/src/environments/environment.ts",
+                  "with": "apps/api/src/environments/environment.prod.ts"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@nrwl/node:execute",
+          "options": {
+            "buildTarget": "api:build"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "apps/api/tsconfig.app.json",
+              "apps/api/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/api/jest.config.js",
+            "tsConfig": "apps/api/tsconfig.spec.json"
+          }
+        }
+      }
+    },
+    "api-interface": {
+      "root": "libs/api-interface",
+      "sourceRoot": "libs/api-interface/src",
+      "projectType": "library",
+      "schematics": {},
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/api-interface/tsconfig.lib.json",
+              "libs/api-interface/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/api-interface/jest.config.js",
+            "tsConfig": "libs/api-interface/tsconfig.spec.json"
+          }
+        }
+      }
+    }
+  },
+  "cli": {
+    "warnings": {
+      "typescriptMismatch": false,
+      "versionMismatch": false
+    },
+    "defaultCollection": "@nrwl/angular"
+  },
+  "schematics": {
+    "@nrwl/angular:application": {
+      "unitTestRunner": "jest",
+      "e2eTestRunner": "cypress"
+    },
+    "@nrwl/angular:library": {
+      "unitTestRunner": "jest"
+    }
+  },
+  "defaultProject": "demo-fullstack-nx"
+}

@@ -1,0 +1,24 @@
+{
+  "npmScope": "demo-fullstack-nx",
+  "implicitDependencies": {
+    "angular.json": "*",
+    "package.json": "*",
+    "tsconfig.json": "*",
+    "tslint.json": "*",
+    "nx.json": "*"
+  },
+  "projects": {
+    "demo-fullstack-nx-e2e": {
+      "tags": []
+    },
+    "demo-fullstack-nx": {
+      "tags": []
+    },
+    "api": {
+      "tags": []
+    },
+    "api-interface": {
+      "tags": []
+    }
+  }
+}
