@@ -8,9 +8,6 @@
     "nx.json": "*"
   },
   "projects": {
-    "demo-fullstack-nx-e2e": {
-      "tags": []
-    },
     "demo-fullstack-nx": {
       "tags": []
     },

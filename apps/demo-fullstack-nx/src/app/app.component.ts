@@ -8,6 +8,6 @@ import { Message } from '@demo-fullstack-nx/api-interface';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  hello$ = this.http.get<Message>('/api/hello');
+  hello$ = this.http.get<Message>('/api/users');
   constructor(private http: HttpClient) {}
 }
